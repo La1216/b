@@ -1,0 +1,422 @@
+<!-- end list -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartioré Foods | The Art of Taste</title>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    
+    <style>
+        /* --- 1. CORE VARIABLES & RESET (The Luxury Aesthetic) --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #f0f0f0;
+            --gold: #D4AF37;
+            --gold-hover: #b5952f;
+            --gray: #333;
+            --white: #ffffff;
+            --font-serif: 'Playfair Display', serif; /* Luxurious Headings */
+            --font-sans: 'Inter', sans-serif; /* Clean Utility */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- 2. TYPOGRAPHY & UTILITY --- */
+        h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 400; }
+        .gold-text { color: var(--gold); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        button { cursor: pointer; border: none; outline: none; transition: 0.3s; }
+
+        /* --- 3. HERO SECTION (Cinematography Feel) --- */
+        header {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1544025162-d76690b609aa?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed; /* Parallax Effect */
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .nav-bar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo { font-size: 1.5rem; font-family: var(--font-serif); letter-spacing: 2px; color: var(--gold); border: 1px solid var(--gold); padding: 5px 15px; }
+
+        .hero-content h1 { font-size: 4rem; margin-bottom: 20px; animation: fadeIn 1.5s ease; }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 40px; font-weight: 300; letter-spacing: 1px; }
+        
+        .cta-btn {
+            padding: 15px 40px;
+            background: var(--gold);
+            color: var(--bg-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+        .cta-btn:hover { background: var(--gold-hover); transform: scale(1.05); }
+
+        /* --- 4. FEATURED MENU (Visual Cards) --- */
+        .section-title { text-align: center; margin: 80px 0 40px; font-size: 2.5rem; }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding-bottom: 100px;
+        }
+
+        .dish-card {
+            background: #111;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .dish-card:hover { transform: translateY(-10px); }
+        
+        .dish-img { width: 100%; height: 300px; object-fit: cover; }
+        
+        .dish-info { padding: 25px; }
+        .dish-name { font-size: 1.5rem; margin-bottom: 10px; color: var(--gold); }
+        .dish-desc { color: #aaa; font-size: 0.9rem; margin-bottom: 20px; }
+        .dish-price { font-size: 1.2rem; font-weight: bold; }
+        .order-btn-small { float: right; color: var(--white); background: transparent; border-bottom: 1px solid var(--gold); }
+
+        /* --- 5. SMART KITCHEN UTILITY (Ingredient Scaler) --- */
+        .utility-section {
+            background: #1a1a1a;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .scale-interface {
+            background: #000;
+            display: inline-block;
+            padding: 40px;
+            border: 1px solid #333;
+            margin-top: 30px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .scale-controls { display: flex; justify-content: center; align-items: center; margin-bottom: 20px; gap: 20px; }
+        .scale-btn { width: 40px; height: 40px; background: #333; color: white; font-size: 1.5rem; border-radius: 50%; }
+        .serving-display { font-size: 1.5rem; font-family: var(--font-serif); color: var(--gold); }
+        
+        .ingredient-list { text-align: left; margin-top: 20px; border-top: 1px solid #333; padding-top: 20px; }
+        .ingredient-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #111; }
+
+        /* --- 6. CHECKOUT MODAL (Data & Payment) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none; justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+
+        .checkout-form {
+            background: var(--white);
+            color: var(--bg-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .checkout-header { font-family: var(--font-serif); font-size: 2rem; margin-bottom: 20px; text-align: center; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px; border: 1px solid #ddd; font-family: var(--font-sans);
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .close-modal { position: absolute; top: 10px; right: 20px; font-size: 2rem; cursor: pointer; }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <div class="logo">CARTIORÉ</div>
+        <div style="color: #fff; font-size: 0.9rem; letter-spacing: 1px;">LUXURY GASTRONOMY</div>
+    </nav>
+
+    <header>
+        <div class="hero-content">
+            <h1 class="gold-text">Taste the Exceptional</h1>
+            <p>Where culinary science meets artistic expression.</p>
+            <button class="cta-btn" onclick="scrollToMenu()">Explore Menu</button>
+        </div>
+    </header>
+
+    <div class="container" id="menu">
+        <h2 class="section-title">Curated Selections</h2>
+        <div class="menu-grid">
+            <div class="dish-card" onclick="openCheckout('Truffle Wagyu Steak', 45000)">
+                <img src="https://images.unsplash.com/photo-1546241072-48010ad2862c?q=80&w=1887&auto=format&fit=crop" class="dish-img" alt="Steak">
+                <div class="dish-info">
+                    <div class="dish-name">Truffle Wagyu Steak</div>
+                    <div class="dish-desc">A5 Japanese Wagyu, black truffle reduction, smoked sea salt.</div>
+                    <div class="dish-price">₦45,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+
+            <div class="dish-card" onclick="openCheckout('Saffron Lobster Risotto', 38000)">
+                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=1780&auto=format&fit=crop" class="dish-img" alt="Pasta">
+                <div class="dish-info">
+                    <div class="dish-name">Saffron Lobster Risotto</div>
+                    <div class="dish-desc">Aged arborio rice, Iranian saffron, butter-poached lobster tail.</div>
+                    <div class="dish-price">₦38,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+            <div class="dish-card" onclick="openCheckout('Saffron Lobster Risotto', 38000)">
+                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=1780&auto=format&fit=crop" class="dish-img" alt="Pasta">
+                <div class="dish-info">
+                    <div class="dish-name">Saffron Lobster Risotto</div>
+                    <div class="dish-desc">Aged arborio rice, Iranian saffron, butter-poached lobster tail.</div>
+                    <div class="dish-price">₦38,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+            <div class="dish-card" onclick="openCheckout('Saffron Lobster Risotto', 38000)">
+                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=1780&auto=format&fit=crop" class="dish-img" alt="Pasta">
+                <div class="dish-info">
+                    <div class="dish-name">Saffron Lobster Risotto</div>
+                    <div class="dish-desc">Aged arborio rice, Iranian saffron, butter-poached lobster tail.</div>
+                    <div class="dish-price">₦38,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+            <div class="dish-card" onclick="openCheckout('Saffron Lobster Risotto', 38000)">
+                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=1780&auto=format&fit=crop" class="dish-img" alt="Pasta">
+                <div class="dish-info">
+                    <div class="dish-name">Saffron Lobster Risotto</div>
+                    <div class="dish-desc">Aged arborio rice, Iranian saffron, butter-poached lobster tail.</div>
+                    <div class="dish-price">₦38,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+            <div class="dish-card" onclick="openCheckout('Saffron Lobster Risotto', 38000)">
+                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=1780&auto=format&fit=crop" class="dish-img" alt="Pasta">
+                <div class="dish-info">
+                    <div class="dish-name">Saffron Lobster Risotto</div>
+                    <div class="dish-desc">Aged arborio rice, Iranian saffron, butter-poached lobster tail.</div>
+                    <div class="dish-price">₦38,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+            <div class="dish-card" onclick="openCheckout('Saffron Lobster Risotto', 38000)">
+                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=1780&auto=format&fit=crop" class="dish-img" alt="Pasta">
+                <div class="dish-info">
+                    <div class="dish-name">Saffron Lobster Risotto</div>
+                    <div class="dish-desc">Aged arborio rice, Iranian saffron, butter-poached lobster tail.</div>
+                    <div class="dish-price">₦38,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+            <div class="dish-card" onclick="openCheckout('Saffron Lobster Risotto', 38000)">
+                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=1780&auto=format&fit=crop" class="dish-img" alt="Pasta">
+                <div class="dish-info">
+                    <div class="dish-name">Saffron Lobster Risotto</div>
+                    <div class="dish-desc">Aged arborio rice, Iranian saffron, butter-poached lobster tail.</div>
+                    <div class="dish-price">₦38,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+
+            <div class="dish-card" onclick="openCheckout('Gold Leaf Chocolate Dome', 15000)">
+                <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?q=80&w=2000&auto=format&fit=crop" class="dish-img" alt="Dessert">
+                <div class="dish-info">
+                    <div class="dish-name">Gold Leaf Chocolate Dome</div>
+                    <div class="dish-desc">70% Dark Valrhona chocolate, edible 24k gold, raspberry coulis.</div>
+                    <div class="dish-price">₦15,000</div>
+                    <button class="order-btn-small">Order Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="utility-section">
+        <div class="container">
+            <h2 class="section-title">Smart Kitchen: <span class="gold-text">Recipe Scaler</span></h2>
+            <p>Planning a dinner party? Adjust the servings below to calculate your grocery needs automatically.</p>
+            
+            <div class="scale-interface">
+                <h3 style="color:white; margin-bottom:15px;">Cartioré Signature Pasta</h3>
+                <div class="scale-controls">
+                    <button class="scale-btn" onclick="updateServings(-1)">-</button>
+                    <span class="serving-display"><span id="serving-count">2</span> Guests</span>
+                    <button class="scale-btn" onclick="updateServings(1)">+</button>
+                </div>
+                <div class="ingredient-list" id="ingredient-list">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="checkout-form">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="checkout-header">Secure Checkout</div>
+            
+            <form id="orderForm" action="https://formsubmit.co/quasarfusion01@gmail.com" method="POST">
+                
+                <input type="text" name="_honey" style="display:none">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="http://localhost:5500/index.html"> <input type="hidden" id="productName" name="Product">
+                <input type="hidden" id="productPrice" name="Amount">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="custName" name="Name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="custEmail" name="Email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea name="Address" required placeholder="Street, City, State"></textarea>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px; border-top: 1px solid #eee; padding-top: 10px;">
+                    <span>Total:</span>
+                    <span id="displayPrice" style="font-weight: bold;">₦0</span>
+                </div>
+
+                <button type="button" class="pay-btn" onclick="payWithPaystack()">PAY NOW</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. SMOOTH SCROLL ---
+        function scrollToMenu() {
+            document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- 2. SMART INGREDIENT SCALER ---
+        let servings = 2;
+        const baseIngredients = [
+            { name: "Fresh Pasta (g)", amount: 200 },
+            { name: "Truffle Oil (ml)", amount: 15 },
+            { name: "Parmesan (g)", amount: 50 },
+            { name: "Heavy Cream (ml)", amount: 100 }
+        ];
+
+        function renderIngredients() {
+            const list = document.getElementById('ingredient-list');
+            list.innerHTML = '';
+            baseIngredients.forEach(ing => {
+                let amount = (ing.amount / 2) * servings; // Base logic
+                list.innerHTML += `
+                    <div class="ingredient-item">
+                        <span style="color:#aaa">${ing.name}</span>
+                        <span class="gold-text">${amount}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('serving-count').innerText = servings;
+        }
+        
+        function updateServings(change) {
+            if (servings + change > 0) {
+                servings += change;
+                renderIngredients();
+            }
+        }
+        // Init Ingredients
+        renderIngredients();
+
+        // --- 3. CHECKOUT & PAYSTACK ---
+        let currentPrice = 0;
+
+        function openCheckout(product, price) {
+            document.getElementById('checkoutModal').style.display = 'flex';
+            document.getElementById('productName').value = product;
+            document.getElementById('productPrice').value = price;
+            document.getElementById('displayPrice').innerText = '₦' + price.toLocaleString();
+            currentPrice = price;
+        }
+
+        function closeModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        function payWithPaystack() {
+            const name = document.getElementById('custName').value;
+            const email = document.getElementById('custEmail').value;
+
+            if(name === "" || email === "") {
+                alert("Please fill in your name and email.");
+                return;
+            }
+
+            let handler = PaystackPop.setup({
+                // **********************************************
+                // PUT YOUR PAYSTACK PUBLIC KEY HERE
+                key:  "pk_test_6fca50e065add0586dccdc7b8a0804bac033d639", 
+                // **********************************************
+                
+                email: email,
+                amount: currentPrice * 100, // Paystack expects amount in kobo
+                currency: "NGN",
+                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // Generate a random ref
+                metadata: {
+                    custom_fields: [
+                        { display_name: "Customer Name", variable_name: "customer_name", value: name }
+                    ]
+                },
+                onClose: function(){
+                    alert('Window closed.');
+                },
+                callback: function(response){
+                    // Payment Success!
+                    // Now we submit the form to FormSubmit to get the email notification
+                    alert('Payment successful! Reference: ' + response.reference);
+                    document.getElementById('orderForm').submit();
+                }
+            });
+
+            handler.openIframe();
+        }
+    </script>
+</body>
+</html>
